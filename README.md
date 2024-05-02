@@ -61,7 +61,7 @@ This project contains several Discord bots that run in Docker containers and are
     Use the following command to start the bots with PM2 in a Docker container:
 
     ```bash
-    docker run --rm -it --env-file ./.env --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile .)
+    docker run --rm -it --env-file ./.env -p 8000:8000 --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile .)
     ```
 
 ## Adding Bots to a Discord Server
