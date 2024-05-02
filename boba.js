@@ -1,5 +1,17 @@
 const axios = require('axios');
 const { Client, GatewayIntentBits } = require('discord.js');
+const express = require('express');
+
+const app = express();
+const PORT = 8000;
+
+app.get('/health', (req, res) => {
+  res.send();
+});
+
+app.listen(PORT, () => {
+  console.log(`HTTP server running on port ${PORT}`);
+});
 
 const client = new Client({
   intents: [
