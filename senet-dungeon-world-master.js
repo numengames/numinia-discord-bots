@@ -21,7 +21,6 @@ client.on('messageCreate', async (message) => {
     const params = new URLSearchParams();
     params.append('assistant', 'SENET_DUNGEON_WORLD_MASTER');
     params.append('message', textMessage);
-    params.append('temperature', 'TEMP_MEDIUM');
 
     if (textMessage) {
       try {

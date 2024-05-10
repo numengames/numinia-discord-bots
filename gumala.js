@@ -21,7 +21,6 @@ client.on('messageCreate', async (message) => {
     const params = new URLSearchParams();
     params.append('assistant', 'GUMALA');
     params.append('message', textMessage);
-    params.append('temperature', 'TEMP_MEDIUM');
 
     if (textMessage) {
       try {
