@@ -38,4 +38,4 @@ client.on('messageCreate', async (message) => {
   }
 });
 
-client.login(process.env.SENET_BOT_TOKEN);
+client.login(process.env.SENET_DUNGEON_WORLD_MASTER_BOT_TOKEN);
