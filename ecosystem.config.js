@@ -48,6 +48,16 @@ module.exports = {
     instances: 1,
     autorestart: true,
     max_memory_restart: '100M',
+  }, {
+    name: 'health-check',
+    script: 'health.js',
+    watch: true,
+    instances: 1,
+    autorestart: true,
+    max_memory_restart: '100M',
+    env: {
+      PM2_API_PORT: 8000
+    }
   }],
   pm2api: {
     port: 8000
