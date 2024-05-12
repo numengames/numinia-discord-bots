@@ -100,4 +100,4 @@ We welcome contributions! If you'd like to improve this project, please follow t
 
 Code released under the [CCO License](https://creativecommons.org/publicdomain/zero/1.0/).
 
-Copyright (c) 2024, NumenGames
+Made with <3 by NumenGames for the world!
