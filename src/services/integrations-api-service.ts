@@ -1,8 +1,7 @@
 const axios = require('axios');
 
 export default class IntegrationsApiService {
-  // static BASE_URL = 'https://integrations-api.numinia.xyz/api/v1';
-  static BASE_URL = 'http://172.17.0.2:8001/api/v1';
+  static BASE_URL = 'https://integrations-api.numinia.xyz/api/v1';
 
   constructor() {}
 
