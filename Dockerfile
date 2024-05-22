@@ -8,6 +8,7 @@ COPY package*.json .
 COPY .npmrc .
 
 RUN npm install -g pm2 ts-node typescript \
+  && npm i \
   && rm -f .npmrc
 
 COPY . .
