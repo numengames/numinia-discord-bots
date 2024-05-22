@@ -1,12 +1,16 @@
 FROM node:20
 
+ARG NUMINIA_NPM_TOKEN
+
 WORKDIR /home/node/app
 
-RUN npm install pm2 -g
+RUN npm install -g pm2 ts-node typescript
 
-COPY package*.json ./
+COPY .npmrc .
+COPY package*.json .
 
-RUN npm install
+RUN npm install \
+  && rm -f .npmrc
 
 COPY . .
 
