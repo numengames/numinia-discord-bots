@@ -50,9 +50,9 @@ module.exports = {
     //   args: 'src/bots/lyra/deploy-commands.ts',
     // },
     {
+      script: 'ts-node',
       name: 'health-check',
-      args: path.join(__dirname, 'src/server.ts'),
-      script: '/usr/local/bin/ts-node',
+      args: 'src/server.ts',
       env: {
         PM2_API_PORT: 8000,
       },
