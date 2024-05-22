@@ -12,57 +12,59 @@ This project contains several Discord bots that run in Docker containers and are
 
 1. **Clone the repository:**
 
-    ```bash
-    git clone git@github.com:numengames/numinia-discord-bots.git
-    cd discord_bots
-    ```
+   ```bash
+   git clone git@github.com:numengames/numinia-discord-bots.git
+   cd discord_bots
+   ```
 
 2. **Create the Environment Variables File:**
 
-    You need to create an `.env` file since it's not included in the repository (listed in `.gitignore`). This file should contain all necessary environment variables for each bot.
+   You need to create an `.env` file since it's not included in the repository (listed in `.gitignore`). This file should contain all necessary environment variables for each bot.
 
-    Create a `.env` file in the root directory and add your bot tokens like so:
+   Create a `.env` file in the root directory and add your bot tokens like so:
 
-    ```plaintext
-    BOT_TOKEN_NAME=YOUR_BOT_TOKEN
-    ```
+   ```plaintext
+   BOT_TOKEN_NAME=YOUR_BOT_TOKEN
+   ```
 
-    Replace `BOT_TOKEN_NAME` with the name of the bot and `YOUR_BOT_TOKEN` with the actual token you obtain from the Discord Developer Portal. Do that for each bot you declare.
+   Replace `BOT_TOKEN_NAME` with the name of the bot and `YOUR_BOT_TOKEN` with the actual token you obtain from the Discord Developer Portal. Do that for each bot you declare.
 
 3. **Configure `ecosystem.config.js`:**
 
-    To add a new bot, update the `ecosystem.config.js` file with the configuration for the new bot. Here is an example of how to add a bot:
+   To add a new bot, update the `ecosystem.config.js` file with the configuration for the new bot. Here is an example of how to add a bot:
 
-    ```javascript
-    module.exports = {
-      apps : [{
-        name: 'new_bot_name',  // Name of your new bot
-        script: 'new_bot_script.js',  // Main script file for your new bot
-        watch: true,
-        instances: 1,
-        autorestart: true,
-        max_memory_restart: '100M' // This is the minimum required by the bot to run
-      }]
-    };
-    ```
+   ```javascript
+   module.exports = {
+     apps: [
+       {
+         name: 'new_bot_name', // Name of your new bot
+         script: 'new_bot_script.js', // Main script file for your new bot
+         watch: true,
+         instances: 1,
+         autorestart: true,
+         max_memory_restart: '100M', // This is the minimum required by the bot to run
+       },
+     ],
+   };
+   ```
 
-    Replace `new_bot_name` and `new_bot_script.js` with the name and entry script of your new bot, respectively.
+   Replace `new_bot_name` and `new_bot_script.js` with the name and entry script of your new bot, respectively.
 
-3. **Build the Docker image:**
+4. **Build the Docker image:**
 
-    Before building the Docker image, ensure you have an `.env` file containing the necessary environment variables for each bot.
+   Before building the Docker image, ensure you have an `.env` file containing the necessary environment variables for each bot.
 
-    ```bash
-    docker build -t discord-bots -f ./Dockerfile .
-    ```
+   ```bash
+   docker build -t discord-bots -f ./Dockerfile .
+   ```
 
-4. **Running the bots:**
+5. **Running the bots:**
 
-    Use the following command to start the bots with PM2 in a Docker container:
+   Use the following command to start the bots with PM2 in a Docker container:
 
-    ```bash
-    docker run --rm -it --env-file ./.env -p 8000:8000 --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile .)
-    ```
+   ```bash
+   docker run --rm -it --env-file ./.env -p 8000:8000 --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile .)
+   ```
 
 ## Adding Bots to a Discord Server
 
