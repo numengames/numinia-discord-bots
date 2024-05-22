@@ -4,11 +4,10 @@ ARG NUMINIA_NPM_TOKEN
 
 WORKDIR /home/node/app
 
-COPY package*.json .
-COPY .npmrc .
+COPY package*.json .npmrc ./
 
-RUN npm install -g pm2 ts-node typescript
-RUN npm install \
+RUN npm install -g pm2 ts-node typescript \
+  && npm install \
   && rm -f .npmrc
 
 COPY . .
