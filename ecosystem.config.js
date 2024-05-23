@@ -50,6 +50,7 @@ module.exports = {
     // },
     {
       script: 'ts-node',
+      autorestart: true,
       name: 'health-check',
       args: 'src/server.ts',
       env: {
