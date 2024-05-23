@@ -23,6 +23,8 @@ module.exports = {
     {
       watch: true,
       script: 'ts-node',
+      kill_timeout: 5000,
+      listen_timeout: 5000,
       name: 'senet-dungeon-world-master',
       args: 'src/bots/senet-dungeon-world-master/index.ts',
     },
@@ -36,7 +38,6 @@ module.exports = {
       script: 'ts-node',
       exec_mode: 'fork',
       autorestart: false,
-      log_level: 'silent',
       name: 'senet-dungeon-world-master-deploy-commands',
       args: 'src/bots/senet-dungeon-world-master/deploy-commands.ts',
     },
@@ -51,6 +52,8 @@ module.exports = {
     {
       script: 'ts-node',
       autorestart: true,
+      kill_timeout: 5000,
+      listen_timeout: 5000,
       name: 'health-check',
       args: 'src/server.ts',
       env: {
