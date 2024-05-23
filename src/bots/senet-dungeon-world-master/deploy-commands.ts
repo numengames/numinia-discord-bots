@@ -35,31 +35,6 @@ const commands = [
       },
     ],
   },
-  // {
-  //   name: COMMANDS.CREATE_CONVERSATION,
-  //   description: 'Create a new conversation with a specific model',
-  //   options: [
-  //     {
-  //       type: 3,
-  //       name: 'model',
-  //       description: 'Models to interact with',
-  //       required: true,
-  //       choices: [{ name: 'gpt-4o', value: 'gpt-4o' }],
-  //     },
-  //     {
-  //       type: 3,
-  //       required: true,
-  //       name: 'title',
-  //       description: 'What is the title of the conversation?',
-  //     },
-  //     {
-  //       type: 3,
-  //       required: true,
-  //       name: 'message',
-  //       description: 'What do you want to ask the AI Agent?',
-  //     },
-  //   ],
-  // },
 ];
 
 const {
