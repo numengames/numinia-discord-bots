@@ -33,14 +33,14 @@ module.exports = {
     //   name: 'thoth',
     //   args: 'src/bots/thoth/index.ts',
     // },
-    // {
-    //   watch: false,
-    //   script: 'ts-node',
-    //   exec_mode: 'fork',
-    //   autorestart: false,
-    //   name: 'senet-dungeon-world-master-deploy-commands',
-    //   args: 'src/bots/senet-dungeon-world-master/deploy-commands.ts',
-    // },
+    {
+      watch: false,
+      script: 'ts-node',
+      exec_mode: 'fork',
+      autorestart: false,
+      name: 'senet-dungeon-world-master-deploy-commands',
+      args: 'src/bots/senet-dungeon-world-master/deploy-commands.ts',
+    },
     // {
     //   watch: false,
     //   script: 'ts-node',
