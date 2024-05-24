@@ -1,9 +1,14 @@
 import pm2, { ProcessDescription } from 'pm2';
 import express, { Request, Response } from 'express';
+import { loggerMiddleware } from '@numengames/numinia-logger';
+
+import config from './config';
 
 const PORT = 8000;
 
 const app = express();
+
+loggerMiddleware(config.logger, app);
 
 app.get('/health', (_req: Request, res: Response) => {
   pm2.connect((err: unknown) => {
@@ -23,11 +28,7 @@ app.get('/health', (_req: Request, res: Response) => {
           .json({ status: 'error', message: 'Failed to list PM2 processes' });
       }
 
-      const filteredList = list.filter(
-        (proc) => proc.name !== 'senet-dungeon-world-master-deploy-commands',
-      );
-
-      const isHealthy = filteredList.every(
+      const isHealthy = list.every(
         (proc: ProcessDescription) => proc.pm2_env?.status === 'online',
       );
 

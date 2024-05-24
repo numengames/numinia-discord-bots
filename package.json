@@ -4,11 +4,12 @@
   "description": "",
   "main": "src/server",
   "scripts": {
-    "deploy-commands": "ts-node src/deploy-commands.ts",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts —-fix",
     "format": "prettier --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:fix": "eslint . --ext .ts —-fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy-numinia-lyra-command": "ts-node src/deploy-commands/numinia-lyra/index.ts",
+    "deploy-dungeon-world-master-command": "ts-node src/deploy-commands/senet-dungeon-world-master/index.ts"
   },
   "engines": {
     "npm": ">=10.0.0",
