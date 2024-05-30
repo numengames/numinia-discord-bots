@@ -1,13 +1,13 @@
 module.exports = {
   apps: [
     {
-      watch: false,
+      watch: true,
       name: 'lyra',
       script: 'ts-node',
       args: 'src/bots/lyra.ts',
     },
     {
-      watch: false,
+      watch: true,
       script: 'ts-node',
       name: 'senet-dungeon-world-master',
       args: 'src/bots/senet-dungeon-world-master.ts',
