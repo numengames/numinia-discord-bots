@@ -8,8 +8,8 @@ export default {
       password: process.env.GRAFANA_LOGGER_PASSWORD || 'test',
     },
     discord: {
-      isActive: true,
-      service: 'numinia-discord-bot',
+      isActive: false,
+      service: 'numinia-discord-bots',
       webhook: process.env.DISCORD_WEBHOOK || 'test',
     },
   },

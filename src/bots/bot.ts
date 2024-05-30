@@ -17,7 +17,7 @@ interface IParams {
   token: string;
   client: Client;
   botName: string;
-  logger: loggerInterfaces.ILogger;
+  loggerHandler: loggerInterfaces.ILogger;
 }
 
 export default class Bot implements IBot {
@@ -27,21 +27,21 @@ export default class Bot implements IBot {
 
   private botName: string;
 
-  private logger: loggerInterfaces.ILogger;
+  private loggerHandler: loggerInterfaces.ILogger;
 
   private integrationsApiService: IIntegrationsApiService;
 
-  constructor({ logger, token, botName, client }: IParams) {
+  constructor({ loggerHandler, token, botName, client }: IParams) {
     this.token = token;
-    this.logger = logger;
     this.client = client;
     this.botName = botName;
+    this.loggerHandler = loggerHandler;
     this.integrationsApiService = new IntegrationsApiService();
   }
 
   init(): void {
     this.client.once('ready', () => {
-      this.logger.logInfo(`login - Bot ${this.botName} is ready!`);
+      this.loggerHandler.logInfo(`login - Bot ${this.botName} is ready!`);
     });
 
     this.client.login(this.token);
@@ -49,8 +49,8 @@ export default class Bot implements IBot {
 
   replyConversation(): void {
     const replyMessage = new ReplyConversation({
-      logger: this.logger,
       client: this.client,
+      loggerHandler: this.loggerHandler,
       integrationsApiService: this.integrationsApiService,
     });
 
@@ -59,8 +59,8 @@ export default class Bot implements IBot {
 
   createConversation(): void {
     const createConversation = new CreateConversation({
-      logger: this.logger,
       client: this.client,
+      loggerHandler: this.loggerHandler,
       integrationsApiService: this.integrationsApiService,
     });
 

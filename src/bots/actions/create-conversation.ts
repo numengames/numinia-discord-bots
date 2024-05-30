@@ -11,19 +11,19 @@ interface ICreateConversation {
 
 interface IParams {
   client: Client;
-  logger: interfaces.ILogger;
+  loggerHandler: interfaces.ILogger;
   integrationsApiService: IIntegrationsApiService;
 }
 
 export default class CreateConversation implements ICreateConversation {
   private client: Client;
 
-  private logger: interfaces.ILogger;
+  private loggerHandler: interfaces.ILogger;
 
   private integrationsApiService: IIntegrationsApiService;
 
-  constructor({ client, integrationsApiService, logger }: IParams) {
-    this.logger = logger;
+  constructor({ client, integrationsApiService, loggerHandler }: IParams) {
+    this.loggerHandler = loggerHandler;
     this.client = client;
     this.integrationsApiService = integrationsApiService;
   }
@@ -162,7 +162,7 @@ export default class CreateConversation implements ICreateConversation {
 
   handleCreateConversation(): void {
     this.client.on('interactionCreate', async (interaction: Interaction) => {
-      this.logger.logInfo('messageCreate - Creating a new conversation');
+      this.loggerHandler.logInfo('messageCreate - Creating a new conversation');
 
       const createConversationListOptions = [
         COMMANDS.CREATE_CONVERSATION,

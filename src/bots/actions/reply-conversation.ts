@@ -16,19 +16,19 @@ interface IReplyConversation {
 
 interface IParams {
   client: Client;
-  logger: interfaces.ILogger;
+  loggerHandler: interfaces.ILogger;
   integrationsApiService: IIntegrationsApiService;
 }
 
 export default class ReplyConversation implements IReplyConversation {
   private client: Client;
 
-  private logger: interfaces.ILogger;
+  private loggerHandler: interfaces.ILogger;
 
   private integrationsApiService: IIntegrationsApiService;
 
-  constructor({ client, integrationsApiService, logger }: IParams) {
-    this.logger = logger;
+  constructor({ client, integrationsApiService, loggerHandler }: IParams) {
+    this.loggerHandler = loggerHandler;
     this.client = client;
     this.integrationsApiService = integrationsApiService;
   }
@@ -43,7 +43,7 @@ export default class ReplyConversation implements IReplyConversation {
 
     if (isThread && textMessage) {
       const conversationId = `discord-${message.channel.id}`;
-      this.logger.logInfo(
+      this.loggerHandler.logInfo(
         `replyConversation - replying conversationId ${conversationId}`,
       );
 
@@ -84,7 +84,7 @@ export default class ReplyConversation implements IReplyConversation {
 
       const thread = message.channel as ThreadChannel;
 
-      this.logger.logInfo(
+      this.loggerHandler.logInfo(
         `replyMessage - Replying a message with threadId discord-${thread.id}`,
       );
 
@@ -100,7 +100,7 @@ export default class ReplyConversation implements IReplyConversation {
 
         await this.replyConversation(message, getAssistantByOpenai.discordId);
       } catch (error) {
-        this.logger.logError(
+        this.loggerHandler.logError(
           `There was an issue with the reply to a ${botName} conversation`,
           error as Error,
         );

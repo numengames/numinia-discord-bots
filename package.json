@@ -32,7 +32,7 @@
   "homepage": "https://github.com/numengames/numinia-discrod-bots#readme",
   "dependencies": {
     "@discordjs/rest": "^2.3.0",
-    "@numengames/numinia-logger": "^1.0.0",
+    "@numengames/numinia-logger": "^2.3.0",
     "axios": "^1.6.8",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
