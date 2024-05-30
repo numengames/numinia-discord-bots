@@ -1,7 +1,7 @@
 import pm2, { ProcessDescription } from 'pm2';
 import express, { Request, Response } from 'express';
 
-const PORT = 8000;
+import config from './config';
 
 const app = express();
 
@@ -27,6 +27,7 @@ app.get('/health', (_req: Request, res: Response) => {
         (proc: ProcessDescription) => proc.pm2_env?.status === 'online',
       );
 
+      console.log('isHealthy', isHealthy);
       if (isHealthy) {
         return res.send();
       }
@@ -38,6 +39,6 @@ app.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`HTTP server running on port ${PORT}`);
+app.listen(config.port, () => {
+  console.log(`HTTP server running on port ${config.port}`);
 });
