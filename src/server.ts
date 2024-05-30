@@ -6,8 +6,6 @@ import config from './config';
 
 const app = express();
 
-app.set('port', config.port);
-
 app.use(cors);
 
 app.get('/health', (_req: Request, res: Response) => {

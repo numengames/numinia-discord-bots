@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["pm2-runtime", "ecosystem.config.js", "--env", "production"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]

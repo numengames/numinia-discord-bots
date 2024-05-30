@@ -41,12 +41,6 @@ module.exports = {
         'awslogs-region': 'your-aws-region',
         'awslogs-stream-prefix': 'pm2-logs',
       },
-      env: {
-        PM2_API_PORT: 8000,
-      },
     },
   ],
-  pm2api: {
-    port: 8000,
-  },
 };
