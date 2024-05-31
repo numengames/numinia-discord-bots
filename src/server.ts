@@ -8,37 +8,43 @@ const app = express();
 
 app.use(cors());
 
-app.get('/health', (_req: Request, res: Response) => {
-  pm2.connect((err: unknown) => {
-    if (err) {
-      console.error('Failed to connect to PM2:', err);
-      return res
-        .status(500)
-        .json({ status: 'error', message: 'Failed to connect to PM2' });
-    }
+let isHealthy = false;
 
-    pm2.list((err: unknown, list) => {
-      pm2.disconnect();
+app.get('/health', (_req: Request, res: Response) => {
+  if (isHealthy) {
+    res.status(200).send();
+  } else {
+    pm2.connect((err: unknown) => {
       if (err) {
-        console.error('Failed to list PM2 processes:', err);
+        console.error('Failed to connect to PM2:', err);
         return res
           .status(500)
-          .json({ status: 'error', message: 'Failed to list PM2 processes' });
+          .json({ status: 'error', message: 'Failed to connect to PM2' });
       }
 
-      const isHealthy = list.every(
-        (proc: ProcessDescription) => proc.pm2_env?.status === 'online',
-      );
+      pm2.list((err: unknown, list) => {
+        pm2.disconnect();
+        if (err) {
+          console.error('Failed to list PM2 processes:', err);
+          return res
+            .status(500)
+            .json({ status: 'error', message: 'Failed to list PM2 processes' });
+        }
 
-      if (isHealthy) {
-        return res.status(200).send();
-      }
+        isHealthy = list.every(
+          (proc: ProcessDescription) => proc.pm2_env?.status === 'online',
+        );
 
-      return res
-        .status(500)
-        .json({ status: 'error', message: 'Some processes are not online' });
+        if (isHealthy) {
+          return res.status(200).send();
+        }
+
+        return res
+          .status(500)
+          .json({ status: 'error', message: 'Some processes are not online' });
+      });
     });
-  });
+  }
 });
 
 app.listen(config.port, () => {
