@@ -38,11 +38,9 @@ This project contains several Discord bots that run in Docker containers and are
      apps: [
        {
          name: 'new_bot_name', // Name of your new bot
-         script: 'new_bot_script.js', // Main script file for your new bot
-         watch: true,
-         instances: 1,
-         autorestart: true,
-         max_memory_restart: '100M', // This is the minimum required by the bot to run
+         watch: true, // This is important to track the status of the bot
+         max_memory_restart: '250M', // Set this to protect the instance memory limits
+         script: 'dist/bots/new_bot_script.js', // Main script file for your new bot
        },
      ],
    };
@@ -55,7 +53,7 @@ This project contains several Discord bots that run in Docker containers and are
    Before building the Docker image, ensure you have an `.env` file containing the necessary environment variables for each bot.
 
    ```bash
-   docker build -t discord-bots -f ./Dockerfile .
+   docker build -t discord-bots -f ./Dockerfile --build-arg NUMINIA_NPM_TOKEN=$(echo $NUMINIA_NPM_TOKEN) .
    ```
 
 5. **Running the bots:**
@@ -63,7 +61,7 @@ This project contains several Discord bots that run in Docker containers and are
    Use the following command to start the bots with PM2 in a Docker container:
 
    ```bash
-   docker run --rm -it --env-file ./.env -p 8000:8000 --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile .)
+   docker run --rm -it --env-file ./.env -p 8000:8000 --net=bridge $(docker build -q -t discord-bots -f ./Dockerfile --build-arg NUMINIA_NPM_TOKEN=$(echo $NUMINIA_NPM_TOKEN) .)
    ```
 
 ## Adding Bots to a Discord Server
@@ -100,6 +98,6 @@ We welcome contributions! If you'd like to improve this project, please follow t
 
 ## 📜 License
 
-Code released under the [CCO License](https://creativecommons.org/publicdomain/zero/1.0/).
+TBD
 
 Made with <3 by NumenGames for the world!
