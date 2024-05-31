@@ -8,6 +8,9 @@ module.exports = {
       combine_logs: true,
       args: 'src/bots/lyra.ts',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      instances: 1,
+      autorestart: true,
+      max_memory_restart: '100M',
       log_options: {
         'awslogs-group': '/ecs/numinia-discord-bots-fargate-service',
         'awslogs-region': 'your-aws-region',
@@ -22,6 +25,9 @@ module.exports = {
       name: 'senet-dungeon-world-master',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       args: 'src/bots/senet-dungeon-world-master.ts',
+      instances: 1,
+      autorestart: true,
+      max_memory_restart: '100M',
       log_options: {
         'awslogs-group': '/ecs/numinia-discord-bots-fargate-service',
         'awslogs-region': 'your-aws-region',
@@ -36,6 +42,9 @@ module.exports = {
       name: 'health-check',
       args: 'src/server.ts',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      instances: 1,
+      autorestart: true,
+      max_memory_restart: '100M',
       log_options: {
         'awslogs-group': '/ecs/numinia-discord-bots-fargate-service',
         'awslogs-region': 'your-aws-region',
