@@ -6,7 +6,7 @@ import config from './config';
 
 const app = express();
 
-app.use(cors);
+app.use(cors());
 
 app.get('/health', (_req: Request, res: Response) => {
   pm2.connect((err: unknown) => {
