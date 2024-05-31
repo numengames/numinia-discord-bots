@@ -173,11 +173,7 @@ export default class CreateConversation implements ICreateConversation {
         interaction.isChatInputCommand() &&
         createConversationListOptions.includes(interaction.commandName)
       ) {
-        try {
-          await this.createConversation(interaction);
-        } catch (error: unknown) {
-          console.log(error);
-        }
+        await this.createConversation(interaction);
       }
     });
   }
