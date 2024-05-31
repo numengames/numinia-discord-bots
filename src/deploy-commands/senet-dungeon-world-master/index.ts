@@ -1,10 +1,14 @@
 import * as dotenv from 'dotenv';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
+import { createLoggerHandler, initLogger } from '@numengames/numinia-logger';
 
 import commands from './commands';
+import config from '../../config';
 
 dotenv.config({ path: 'deploy-commands.env' });
+
+initLogger(config.logger);
 
 const {
   SENET_DUNGEON_WORLD_MASTER_GUILD_ID,
@@ -16,9 +20,13 @@ const rest = new REST({ version: '10' }).setToken(
   SENET_DUNGEON_WORLD_MASTER_BOT_TOKEN as string,
 );
 
+const loggerHandler = createLoggerHandler(
+  'deploy-commands-senet-dungeon-world-master',
+);
+
 (async () => {
   try {
-    console.log('Registrando comandos de aplicación...');
+    loggerHandler.logInfo('Loading application commands...');
 
     await rest.put(
       Routes.applicationGuildCommands(
@@ -30,8 +38,11 @@ const rest = new REST({ version: '10' }).setToken(
       },
     );
 
-    console.log('Comandos registrados correctamente.');
-  } catch (error) {
-    console.error('Error al registrar los comandos:', error);
+    loggerHandler.logInfo('Commands loaded sucessfully.');
+  } catch (error: unknown) {
+    loggerHandler.logError(
+      'There was an error loading the commands',
+      error as Error,
+    );
   }
 })();
