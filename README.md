@@ -39,6 +39,7 @@ This project contains several Discord bots that run in Docker containers and are
        {
          name: 'new_bot_name', // Name of your new bot
          watch: true, // This is important to track the status of the bot
+         exec_mode: 'fork|cluster', // Launch the task in a single process or cluster
          max_memory_restart: '250M', // Set this to protect the instance memory limits
          script: 'dist/bots/new_bot_script.js', // Main script file for your new bot
        },
