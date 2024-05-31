@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/server",
   "scripts": {
+    "build": "rimraf dist && tsc",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
     "lint:fix": "eslint . --ext .ts —-fix",
