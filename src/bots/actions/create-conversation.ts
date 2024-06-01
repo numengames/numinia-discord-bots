@@ -132,6 +132,9 @@ export default class CreateConversation implements ICreateConversation {
     };
 
     try {
+      await interaction.deferReply({ ephemeral: true });
+      this.loggerHandler.logInfo('createConversation - Reply deferred');
+
       this.configureThreadParams(commandName, interaction, threadParams);
 
       if (
@@ -142,9 +145,6 @@ export default class CreateConversation implements ICreateConversation {
         this.loggerHandler.logInfo('createConversation - Invalid channel');
         return;
       }
-
-      await interaction.deferReply({ ephemeral: true });
-      this.loggerHandler.logInfo('createConversation - Reply deferred');
 
       const thread = await this.createThread(
         channel,
@@ -220,9 +220,16 @@ export default class CreateConversation implements ICreateConversation {
         'createConversation - Error occurred',
         error as Error,
       );
-      await interaction.editReply({
-        content: 'There was an error processing the request.',
-      });
+      try {
+        await interaction.editReply({
+          content: 'There was an error processing the request.',
+        });
+      } catch (editError: unknown) {
+        this.loggerHandler.logError(
+          'createConversation - Error editing reply',
+          editError as Error,
+        );
+      }
     }
   }
 

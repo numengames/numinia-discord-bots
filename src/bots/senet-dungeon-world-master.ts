@@ -30,5 +30,5 @@ const bot = new Bot({
 });
 
 bot.init();
-bot.replyConversation();
 bot.createConversation();
+bot.replyConversation();
