@@ -15,7 +15,7 @@ app.use(cors());
 initExpressLogger(config.logger, app);
 const loggerHandler = createLoggerHandler('numinia-discord-bots');
 
-app.get('/health', (_req: Request, res: Response) => {
+app.get('/monit/health', (_req: Request, res: Response) => {
   pm2.connect((error: unknown) => {
     if (error) {
       loggerHandler.logError('Failed to connect to PM2:', error as Error);
