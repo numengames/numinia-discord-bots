@@ -1,9 +1,9 @@
 import {
   Client,
   Message,
-  PartialMessage,
   TextChannel,
   ThreadChannel,
+  PartialMessage,
 } from 'discord.js';
 import { interfaces } from '@numengames/numinia-logger';
 
@@ -100,7 +100,7 @@ export default class ReplyConversation implements IReplyConversation {
   }
 
   handleReplyMessage(botName: string): void {
-    this.client.on('messageCreate', async (message) => {
+    this.client.on('messageCreate', async (message: Message) => {
       this.loggerHandler.logInfo(
         'handleReplyMessage - messageCreate event fired',
       );
