@@ -38,17 +38,13 @@ export default class ReplyConversation implements IReplyConversation {
     discordId: string,
   ) {
     const isThread = message.channel instanceof ThreadChannel;
-    this.loggerHandler.logInfo(`replyConversation - isThread: ${isThread}`);
 
     const textMessage = message.content?.trim();
-    this.loggerHandler.logInfo(
-      `replyConversation - textMessage: ${textMessage}`,
-    );
 
     if (isThread && textMessage) {
       const conversationId = `discord-${message.channel.id}`;
       this.loggerHandler.logInfo(
-        `replyConversation - replying conversationId ${conversationId}`,
+        `replyConversation - replying conversationId ${conversationId} - textMessage: ${textMessage}`,
       );
 
       try {
@@ -101,16 +97,17 @@ export default class ReplyConversation implements IReplyConversation {
 
   handleReplyMessage(botName: string): void {
     this.client.on('messageCreate', async (message: Message) => {
+      if (
+        message.author.bot ||
+        message.webhookId ||
+        !(message.channel instanceof ThreadChannel)
+      ) {
+        return;
+      }
+
       this.loggerHandler.logInfo(
         'handleReplyMessage - messageCreate event fired',
       );
-
-      if (message.author.bot || !(message.channel instanceof ThreadChannel)) {
-        this.loggerHandler.logInfo(
-          'handleReplyMessage - message ignored (either from bot or not in a thread)',
-        );
-        return;
-      }
 
       const thread = message.channel as ThreadChannel;
 

@@ -52,6 +52,8 @@ export default class CreateConversation implements ICreateConversation {
         };
       } else if (commandName === COMMANDS.CREATE_CONVERSATION) {
         threadParams.model = interaction.options.getString('model');
+      } else {
+        throw new Error('The command does not exist');
       }
     }
   }
@@ -121,9 +123,15 @@ export default class CreateConversation implements ICreateConversation {
     }
 
     const { commandName, channel, user } = interaction;
-    this.loggerHandler.logInfo(
-      `createConversation - commandName: ${commandName}, user: ${user.username}`,
-    );
+
+    if (
+      !channel ||
+      !channel.isTextBased() ||
+      !(channel instanceof TextChannel)
+    ) {
+      this.loggerHandler.logInfo('createConversation - Invalid channel');
+      return;
+    }
 
     const threadParams: Record<string, unknown> = {
       type: 'chatgpt',
@@ -136,15 +144,6 @@ export default class CreateConversation implements ICreateConversation {
       this.loggerHandler.logInfo('createConversation - Reply deferred');
 
       this.configureThreadParams(commandName, interaction, threadParams);
-
-      if (
-        !channel ||
-        !channel.isTextBased() ||
-        !(channel instanceof TextChannel)
-      ) {
-        this.loggerHandler.logInfo('createConversation - Invalid channel');
-        return;
-      }
 
       const thread = await this.createThread(
         channel,
@@ -170,7 +169,7 @@ export default class CreateConversation implements ICreateConversation {
 
       threadParams.conversationId = `discord-${thread.id}`;
       this.loggerHandler.logInfo(
-        `createConversation - conversationId: ${threadParams.conversationId}`,
+        `createConversation - conversationId: ${(threadParams.conversationId as string).toString()}`,
       );
 
       await this.integrationsApiService.createConversation(threadParams);
@@ -190,22 +189,18 @@ export default class CreateConversation implements ICreateConversation {
       const botMentionedId = interaction.options.getString('ai-agent');
       const botMentioned = await this.client.users.fetch(botMentionedId || '');
       this.loggerHandler.logInfo(
-        `createConversation - botMentioned: ${botMentioned.username}`,
+        `createConversation - botMentioned: ${botMentioned.username.toString()}`,
       );
 
       const botWebhook = await channel.createWebhook({
         name: botMentioned.username,
         avatar: botMentioned.displayAvatarURL(),
       });
-      this.loggerHandler.logInfo('createConversation - Bot webhook created');
 
       await botWebhook.send({
         content: response,
         threadId: thread.id,
       });
-      this.loggerHandler.logInfo(
-        'createConversation - Response sent via bot webhook',
-      );
 
       await interaction.editReply({
         content:
@@ -214,7 +209,6 @@ export default class CreateConversation implements ICreateConversation {
 
       await userWebhook.delete();
       await botWebhook.delete();
-      this.loggerHandler.logInfo('createConversation - Webhooks deleted');
     } catch (error: unknown) {
       this.loggerHandler.logError(
         'createConversation - Error occurred',
@@ -250,8 +244,6 @@ export default class CreateConversation implements ICreateConversation {
           `interactionCreate - Command detected: ${interaction.commandName}`,
         );
         await this.createConversation(interaction);
-      } else {
-        this.loggerHandler.logInfo('interactionCreate - Command not handled');
       }
     });
   }

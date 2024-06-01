@@ -1,4 +1,8 @@
 import cors from 'cors';
+import {
+  initExpressLogger,
+  createLoggerHandler,
+} from '@numengames/numinia-logger';
 import pm2, { ProcessDescription } from 'pm2';
 import express, { Request, Response } from 'express';
 
@@ -8,19 +12,22 @@ const app = express();
 
 app.use(cors());
 
+initExpressLogger(config.logger, app);
+const loggerHandler = createLoggerHandler('numinia-discord-bots');
+
 app.get('/health', (_req: Request, res: Response) => {
-  pm2.connect((err: unknown) => {
-    if (err) {
-      console.error('Failed to connect to PM2:', err);
+  pm2.connect((error: unknown) => {
+    if (error) {
+      loggerHandler.logError('Failed to connect to PM2:', error as Error);
       return res
         .status(500)
         .json({ status: 'error', message: 'Failed to connect to PM2' });
     }
 
-    pm2.list((err: unknown, list) => {
+    pm2.list((error: unknown, list) => {
       pm2.disconnect();
-      if (err) {
-        console.error('Failed to list PM2 processes:', err);
+      if (error) {
+        loggerHandler.logError('Failed to list PM2 processes:', error as Error);
         return res
           .status(500)
           .json({ status: 'error', message: 'Failed to list PM2 processes' });
@@ -46,5 +53,5 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 app.listen(config.port, () => {
-  console.log(`HTTP server running on port ${config.port}`);
+  loggerHandler.logInfo(`HTTP server running on port ${config.port}`);
 });
